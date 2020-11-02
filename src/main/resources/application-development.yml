@@ -1,0 +1,67 @@
+server:
+  port: 8081
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: spring-cloud-api-gateway
+  boot:
+    admin:
+      client:
+        url: http://192.168.12.66:8082
+        instance:
+          prefer-ip: true
+        username: cloud
+        password: cloud@123
+        enabled: false
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: ussd-api
+          uri: lb://ussd-api
+          predicates:
+            - Path=/ussd/*
+          filters:
+            - RewritePath=/ussd/(?<path>.*), /$\{path}
+    consul:
+      discovery:
+        prefer-ip-address: true
+        tags: version=1.0
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 15s
+        healthCheckTimeout: 60s
+        healthCheckCriticalTimeout: 5m
+        instance-id: spring-cloud-api-gateway
+      enabled: true
+      host: 127.0.0.1
+  jackson:
+    default-property-inclusion: non_null
+  output:
+    ansi:
+      enabled: always
+
+info:
+  tags:
+    environment: development
+  app:
+    version: 0.0.1-SNAPSHOT
+
+logging:
+  config: src/main/resources/log4j2.xml
+  file:
+    name: logs/gateway-service.log
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 9081
