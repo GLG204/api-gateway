@@ -1,11 +1,11 @@
-### Java Spring template project
+# Run using docker
+1. docker build . --tag zuul-api-gateway
+2. docker run -it -p8080:8080 zuul-api-gateway:latest
 
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
+# Run native
+1. gite clone https://gitlab.com/GLG204/administration/backend/zuul-api-gateway.git
+2. cd zuul-api-gateway
+3. mvn package
+4. java -Dspring.profiles.active=development -jar target/demo.jar
 
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/spring).
-
-### CI/CD with Auto DevOps
-
-This template is compatible with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/).
-
-If Auto DevOps is not already enabled for this project, you can [turn it on](https://docs.gitlab.com/ee/topics/autodevops/#enabling-auto-devops) in the project settings.
+###### Note: copy src/main/resources/application-development.yml to target directory

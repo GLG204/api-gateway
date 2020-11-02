@@ -1,0 +1,10 @@
+spring:
+  boot:
+    admin:
+      client:
+        enabled: false
+  cloud:
+    gateway:
+      enabled: false
+    consul:
+      enabled: false
